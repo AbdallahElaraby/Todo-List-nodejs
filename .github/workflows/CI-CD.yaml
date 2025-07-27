@@ -85,7 +85,7 @@ jobs:
         shell: bash
         env:
           GIT_TOKEN: ${{ secrets.GITOPS_PAT }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
         run: |
           set -e  # Fail early on error
 
