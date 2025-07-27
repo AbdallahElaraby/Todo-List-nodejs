@@ -31,28 +31,24 @@ jobs:
           docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
           docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:${{ github.sha }}
 
+      - name: Update GitOps repository
+        shell: bash
+        env:
+            GIT_TOKEN: ${{ secrets.GITOPS_PAT }}
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "actions@github.com"
 
+            # Clone GitOps repo using token
+            git clone https://$GIT_TOKEN@github.com/AbdallahElaraby/Todo-List-nodejs-GitOps.git
+            cd Todo-List-nodejs-GitOps
+            ls -l
+            cat deployment.yaml
 
-    #   - name: Update GitOps repository
-    #     shell: bash
-    #     env:
-    #       GIT_TOKEN: ${{ secrets.GITOPS_PAT }}
-    #     run: |
-    #       git config --global credential.helper store
-    #       echo "https://${GIT_TOKEN}:x-oauth-basic@github.com" > ~/.git-credentials
-
-    #       rm -rf gitops
-    #       git clone https://github.com/rslim087a/grade-api-gitops.git gitops
-    #       cd gitops
-
-    #       if [[ "$OSTYPE" == "darwin"* ]]; then
-    #         sed -i '' "s|image: .*|image: docker.io/${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}|g" deployment.yaml
-    #       else
-    #         sed -i "s|image: .*|image: docker.io/${{ secrets.DOCKER_USERNAME }}/myapp:${{ github.sha }}|g" deployment.yaml
-    #       fi
-
-    #       git config --global user.name "GitHub Actions"
-    #       git config --global user.email "actions@github.com"
-    #       git add deployment.yaml
-    #       git commit -m "Update image to ${{ github.sha }}"
-    #       git push -f https://${GIT_TOKEN}@github.com/rslim087a/grade-api-gitops.git main
+            # Update image tag in deployment.yaml
+            sed -i "s|image: .*|image: docker.io/${DOCKER_USERNAME}/myapp:${{ github.sha }}|g" deployment.yaml
+            cat deployment.yaml
+            git add deployment.yaml
+            git commit -m "Update image to ${{ github.sha }}" || echo "No changes to commit"
+            git push origin main
