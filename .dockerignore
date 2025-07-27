@@ -28,3 +28,6 @@ test/
 tests/
 *.spec.js
 *.md
+# Env files
+.env
+.env.*
