@@ -11,23 +11,20 @@ This repository contains the source code for a simple Todo List web application 
 - **Containerization**: Docker
 - **CI/CD**: GitHub Actions
 - **GitOps Integration**: Pushes updated image tags to a separate repository
-    Link for GitOps repository
+    👉 [GitOps Repository](https://github.com/AbdallahElaraby/todo-list-gitops)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-todo-list-nodejs/
-├── public/                  # Static files
-├── routes/                  # Express routes
-├── views/                   # EJS templates
-├── .env.example             # Environment variable template
-├── app.js                   # Main app entry point
-├── Dockerfile               # Docker build configuration
-├── .github/workflows/ci.yml# GitHub Actions CI pipeline
-├── package.json
-└── README.md
+Todo-List-nodejs/
+├── .dockerignore                  # Ignore rules for Docker
+├── .github/                       # GitHub Actions workflows
+│   └── workflows/CI-CD.yml        # CI pipeline definition
+├── Dockerfile                     # Docker build configuration
+├── README.md                      # Project documentation
+├── src/                           # Source code of the app
 ```
 
 ---
@@ -108,25 +105,16 @@ Set these secrets and variables in your GitHub repository:
 
 ## 🔁 GitOps Integration
 
-The workflow automatically clones a separate GitOps repo (which contains your Helm chart or manifest files) and updates the image tag for the Todo app.
+The CI workflow clones the [GitOps repository](https://github.com/AbdallahElaraby/todo-list-gitops) and updates the `values.yaml` file used by the Helm chart to change the Docker image tag.
 
 Example update logic:
 ```yaml
 image:
-  repository: your-registry/todo-list-nodejs
+  repository: your-registry/your-username/myapp
   tag: <latest-sha>
 ```
 
-ArgoCD running on the K8s cluster detects the change and updates the deployment accordingly.
-
----
-
-## ✅ Future Enhancements
-
-- Add unit testing (Jest)
-- Add GitHub Action for code linting
-- Add vulnerability scanning (Trivy)
-- Rate limiting and authentication for production
+ArgoCD running in the Kubernetes cluster detects this change and automatically rolls out the new version of the application.
 
 ---
 
