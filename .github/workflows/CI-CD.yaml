@@ -4,16 +4,15 @@ on:
   push:
     branches:
         - master
-
+env:
+  CONTAINER_REGISTRY: ${{ vars.CONTAINER_REGISTRY }}
+  IMAGE_NAME: myapp
+  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    env:
-      CONTAINER_REGISTRY: docker.io
-      IMAGE_NAME: myapp
-      DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -35,7 +34,6 @@ jobs:
         shell: bash
         env:
           GIT_TOKEN: ${{ secrets.GITOPS_PAT }}
-          DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
         run: |
           set -e  # Fail early on error
 
@@ -54,7 +52,7 @@ jobs:
           fi
 
           # Update Helm values.yaml
-          sed -i "s|^\([[:space:]]*repository:\).*|\1 docker.io/${DOCKER_USERNAME}/myapp|g" helm/todo-list/values.yaml
+          sed -i "s|^\([[:space:]]*repository:\).*|\1 ${CONTAINER_REGISTRY}/${DOCKER_USERNAME}/myapp|g" helm/todo-list/values.yaml
           sed -i "s|^\([[:space:]]*tag:\).*|\1 ${{ github.sha }}|g" helm/todo-list/values.yaml
           sed -i "s|^\([[:space:]]*pullPolicy:\).*|\1 IfNotPresent|g" helm/todo-list/values.yaml
 
