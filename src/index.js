@@ -10,6 +10,7 @@ const Dashboard = require('./models/dashboard');
 
 const app = express();
 
+
 // path: routes\index.js
 app.get('/', require('./routes'));
 app.get('/dashboard', require('./routes'));
