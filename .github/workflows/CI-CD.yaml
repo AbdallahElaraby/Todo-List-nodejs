@@ -47,7 +47,7 @@ jobs:
 
           # Ensure DOCKER_USERNAME is not empty
           if [ -z "$DOCKER_USERNAME" ]; then
-            echo "DOCKER_USERNAME is empty. Check your GitHub Secrets setup."
+            echo "DOCKER_USERNAME is empty."
             exit 1
           fi
 
