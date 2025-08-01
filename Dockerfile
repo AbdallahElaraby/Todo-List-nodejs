@@ -1,16 +1,11 @@
-FROM node:18-alpine
-
+From node18:alpine As builder
 WORKDIR /app
-
-# Copy package.json and package-lock.json if it exists
 COPY src/package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the app
 COPY src/ ./
-
+FROM node:18-alpine AS production
+WORKDIR /app
+COPY --from=builder /app ./
+RUN npm prune --production
 EXPOSE 4000
-
 CMD ["npm", "start"]
