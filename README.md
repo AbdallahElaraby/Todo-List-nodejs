@@ -11,7 +11,7 @@ This repository contains the source code for a simple Todo List web application 
 - **Containerization**: Docker
 - **CI/CD**: GitHub Actions
 - **GitOps Integration**: Pushes updated image tags to a separate repository
-    👉 [GitOps Repository](https://github.com/AbdallahElaraby/todo-list-gitops)
+    👉 [GitOps Repository](https://github.com/AbdallahElaraby/Todo-List-nodejs-GitOps)
 
 ---
 
