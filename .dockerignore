@@ -1,33 +1,30 @@
-# Ignore node modules from host (we install them inside container)
 node_modules
 
-# OS & editor junk
+
 .DS_Store
 Thumbs.db
 
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Git
 .git
 .gitignore
 
-# Dockerfile itself (optional)
+
 Dockerfile
 .dockerignore
 
-# IDEs
 .vscode/
 .idea/
 *.swp
 
-# Tests or docs (optional, if not needed in production)
+
 test/
 tests/
 *.spec.js
 *.md
-# Env files
+
+
 .env
 .env.*
