@@ -54,5 +54,5 @@ jobs:
           cat helm/todo-list/values.yaml
 
           git add helm/todo-list/values.yaml
-          git commit -m "Update Helm image tag to ${{ github.sha }}" || echo "No changes to commit"
+          git commit -m "Update Helm image tag to ${{ github.sha }}"
           git push origin main
