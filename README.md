@@ -1,6 +1,6 @@
 # 📝 Todo List Node.js App with CI/CD
 
-This repository contains the source code for a simple Todo List web application built using Node.js and MongoDB. It also includes a GitHub Actions pipeline that builds and pushes a Docker image to a docker hub registry and automatically updates a GitOps repository to trigger deployment via ArgoCD.
+This repository contains the source code for a simple Todo List web application built using Node.js and MongoDB. It also includes a GitHub Actions pipeline that builds and pushes a Docker image to a docker hub registry and automatically updates a GitOps repository to trigger deployment via ArgoCD. 
 
 ---
 
